@@ -23,6 +23,10 @@ class PostgresCrudRepository implements CrudRepository {
       data: { ...restaurant },
     });
   }
+
+  async deleteRestaurant(restoId: string): Promise<void> {
+    await prisma.restaurant.delete({ where: { restoId } });
+  }
 }
 
 export default PostgresCrudRepository;
