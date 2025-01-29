@@ -1,12 +1,12 @@
 import Restaurant from "../domain/entities/Restaurant.js";
 import CrudRepository from "../domain/repositories/CrudRepository.js";
 
-class FetchRestaurants {
+class EditRestaurant {
   constructor(private crudRepository: CrudRepository) {}
 
-  async execute(): Promise<Restaurant[]> {
-    return await this.crudRepository.fetchRestaurants();
+  async execute(restoId: string, restaurant: Restaurant): Promise<void> {
+    await this.crudRepository.editRestaurant(restoId, restaurant);
   }
 }
 
-export default FetchRestaurants;
+export default EditRestaurant;

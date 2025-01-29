@@ -4,17 +4,24 @@ import prisma from "../../orm/prismaClient.js";
 
 class PostgresCrudRepository implements CrudRepository {
   async addRestaurant(restaurant: Restaurant): Promise<void> {
-    await prisma.restuarant.create({
+    await prisma.restaurant.create({
       data: restaurant,
     });
   }
 
-  async fetchRestuarants(): Promise<Restaurant[]> {
-    const resturants = await prisma.restuarant.findMany();
-    if (!resturants) {
+  async fetchRestaurants(): Promise<Restaurant[]> {
+    const restaurants = await prisma.restaurant.findMany();
+    if (!restaurants) {
       throw new Error("DB error");
     }
-    return resturants;
+    return restaurants;
+  }
+
+  async editRestaurant(restoId: string, restaurant: Restaurant): Promise<void> {
+    await prisma.restaurant.update({
+      where: { restoId },
+      data: { ...restaurant },
+    });
   }
 }
 

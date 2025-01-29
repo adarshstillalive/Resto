@@ -8,7 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Restuarant {
+model Restaurant {
   restoId String @id @default(uuid())
   name String
   address String

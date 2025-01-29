@@ -1,9 +1,9 @@
 -- CreateTable
-CREATE TABLE "Restuarant" (
+CREATE TABLE "Restaurant" (
     "restoId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "contact" TEXT NOT NULL,
 
-    CONSTRAINT "Restuarant_pkey" PRIMARY KEY ("restoId")
+    CONSTRAINT "Restaurant_pkey" PRIMARY KEY ("restoId")
 );
