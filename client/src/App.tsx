@@ -5,10 +5,6 @@ import {
   CssBaseline,
   ThemeProvider,
   Typography,
-  Card,
-  CardContent,
-  CardActions,
-  IconButton,
   Box,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -20,9 +16,10 @@ import {
   editRestaurantApi,
   fetchRestaurantsApi,
 } from "./services/crudService";
-import { Add, Delete, Edit } from "@mui/icons-material";
+import { Add } from "@mui/icons-material";
 import AddRestaurantForm from "./components/AddRestaurantForm";
 import EditRestaurantForm from "./components/EditRestaurantForm";
+import RestaurantCard from "./components/RestaurantCard";
 
 function App() {
   const [toggle, setToggle] = useState(false);
@@ -82,7 +79,6 @@ function App() {
   };
 
   const handleDelete = async (restoId: string) => {
-    if (!window.confirm("Are you sure?")) return;
     try {
       await deleteRestaurantApi(restoId);
       fetchRestaurants();
@@ -138,76 +134,13 @@ function App() {
           }}
         >
           {restaurants.map((restaurant) => (
-            <Card
+            <RestaurantCard
               key={restaurant.restoId}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                height: "100%",
-                transition: "transform 0.2s, box-shadow 0.2s",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                  boxShadow: (theme) => theme.shadows[8],
-                },
-                borderRadius: 2,
-                overflow: "hidden",
-              }}
-            >
-              <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
-                  {restaurant.name}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    mb: 1,
-                  }}
-                >
-                  📍 {restaurant.address}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  📞 {restaurant.contact}
-                </Typography>
-              </CardContent>
-              <CardActions
-                sx={{
-                  justifyContent: "flex-end",
-                  p: 2,
-                  borderTop: 1,
-                  borderColor: "divider",
-                }}
-              >
-                <IconButton
-                  color="primary"
-                  size="small"
-                  onClick={() => {
-                    setEditingRestaurant(restaurant);
-                    setOpenEditForm(true);
-                  }}
-                >
-                  <Edit />
-                </IconButton>
-                <IconButton
-                  color="error"
-                  size="small"
-                  onClick={() =>
-                    restaurant.restoId && handleDelete(restaurant.restoId)
-                  }
-                >
-                  <Delete />
-                </IconButton>
-              </CardActions>
-            </Card>
+              restaurant={restaurant}
+              setEditingRestaurant={setEditingRestaurant}
+              setOpenEditForm={setOpenEditForm}
+              handleDelete={handleDelete}
+            />
           ))}
         </Box>
       </Container>
