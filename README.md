@@ -53,7 +53,7 @@ The Restaurant Listing Platform is a full-stack mini web application built using
 
 ### Prerequisites
 - Node.js (v20.x)
-- PostgreSQL (local or cloud instance)
+- PostgreSQL (cloud instance)
 - Git
 
 1. **Clone the Repository**
@@ -125,7 +125,7 @@ The Restaurant Listing Platform is a full-stack mini web application built using
 ---
 
 ## Deployment
-The application is hosted live at: `https://resto-bay-eight.vercel.app`
+The application is hosted live at: `[https://resto-bay-eight.vercel.app](https://resto-bay-eight.vercel.app)`
 
 ---
 
