@@ -8,6 +8,14 @@ class PostgresCrudRepository implements CrudRepository {
       data: restaurant,
     });
   }
+
+  async fetchRestuarants(): Promise<Restaurant[]> {
+    const resturants = await prisma.restuarant.findMany();
+    if (!resturants) {
+      throw new Error("DB error");
+    }
+    return resturants;
+  }
 }
 
 export default PostgresCrudRepository;
