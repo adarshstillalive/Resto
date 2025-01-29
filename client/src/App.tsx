@@ -6,6 +6,8 @@ import {
   ThemeProvider,
   Typography,
   Box,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
@@ -22,6 +24,9 @@ import EditRestaurantForm from "./components/EditRestaurantForm";
 import RestaurantCard from "./components/RestaurantCard";
 
 function App() {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState<"success" | "error">("success");
   const [toggle, setToggle] = useState(false);
   const [restaurants, setRestaurants] = useState<IRestaurant[]>([]);
   const [openAddForm, setOpenAddForm] = useState(false);
@@ -61,8 +66,14 @@ function App() {
       await addRestaurantApi(restaurantData);
       setOpenAddForm(false);
       fetchRestaurants();
+      setMessage("Restaurant data added");
+      setSeverity("success");
+      setOpen(true);
     } catch (error) {
       console.error("Failed to save restaurant", error);
+      setMessage("Adding restaurant data failed");
+      setSeverity("error");
+      setOpen(true);
     }
   };
 
@@ -73,8 +84,14 @@ function App() {
       setOpenEditForm(false);
       setEditingRestaurant(null);
       fetchRestaurants();
+      setMessage("Restaurant data updated");
+      setSeverity("success");
+      setOpen(true);
     } catch (error) {
       console.error("Failed to save restaurant", error);
+      setMessage("Error in updating restaurant data");
+      setSeverity("error");
+      setOpen(true);
     }
   };
 
@@ -82,9 +99,19 @@ function App() {
     try {
       await deleteRestaurantApi(restoId);
       fetchRestaurants();
+      setMessage("Restaurant deleted successfully");
+      setSeverity("success");
+      setOpen(true);
     } catch (error) {
       console.error("Failed to delete restaurant", error);
+      setMessage("Error in deleting restaurant data");
+      setSeverity("error");
+      setOpen(true);
     }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -144,6 +171,17 @@ function App() {
           ))}
         </Box>
       </Container>
+
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert onClose={handleClose} severity={severity}>
+          {message}
+        </Alert>
+      </Snackbar>
 
       <AddRestaurantForm
         open={openAddForm}
